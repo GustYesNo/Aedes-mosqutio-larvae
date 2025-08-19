@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>คำนวณค่า HI CI BI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      overflow: hidden; /* ครอบหัวกล่อง */
+    }
+    /* ส่วนหัวกล่อง */
+    .header {
+      background: #2196F3;
+      text-align: center;
+      padding: 20px;
+      color: white;
+    }
+    .header img {
+      width: 70px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    .header h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+    /* เนื้อหา */
+    .content {
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2196F3;
+      border: none;
+      color: white;
+      font-size: 1.1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1976D2;
+    }
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- หัวกล่อง -->
+    <div class="header">
+      <img src="logo.png" alt="Logo">
+      <h3>ศูนย์บริการสาธารณสุขที่ 8 บางเขน</h3>
+    </div>
+
+    <!-- เนื้อหา -->
+    <div class="content">
+      <h2>คำนวณค่า HI CI BI</h2>
+
+      <div class="input-group">
+        <label>ชื่อ รพ.สต.</label>
+        <input type="text" id="hospital" placeholder="กรอกชื่อ รพ.สต.">
+      </div>
+
+      <div class="input-group">
+        <label>เลือกหมวดหมู่</label>
+        <select id="category">
+          <option value="หมู่บ้าน">หมู่บ้าน</option>
+          <option value="วัด">วัด</option>
+          <option value="โรงเรียน">โรงเรียน</option>
+          <option value="ศูนย์เด็กเล็ก">ศูนย์เด็กเล็ก</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>ชื่อหมู่บ้าน/วัด/โรงเรียน/ศูนย์เด็กเล็ก</label>
+        <input type="text" id="place" placeholder="เช่น บ้านหนองบัว">
+      </div>
+
+      <div class="input-group">
+        <label>จำนวนหลังคาเรือนที่สำรวจ</label>
+        <input type="number" id="houseTotal" min="0">
+      </div>
+
+      <div class="input-group">
+        <label>จำนวนหลังคาเรือนที่พบลูกน้ำยุงลาย</label>
+        <input type="number" id="housePositive" min="0">
+      </div>
+
+      <div class="input-group">
+        <label>จำนวนภาชนะที่สำรวจ</label>
+        <input type="number" id="containerTotal" min="0">
+      </div>
+
+      <div class="input-group">
+        <label>จำนวนภาชนะที่มีลูกน้ำยุงลาย</label>
+        <input type="number" id="containerPositive" min="0">
+      </div>
+
+      <button onclick="calculate()">คำนวณ</button>
+
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+
+<script>
+function calculate() {
+  let houseTotal = parseFloat(document.getElementById('houseTotal').value) || 0;
+  let housePositive = parseFloat(document.getElementById('housePositive').value) || 0;
+  let containerTotal = parseFloat(document.getElementById('containerTotal').value) || 0;
+  let containerPositive = parseFloat(document.getElementById('containerPositive').value) || 0;
+
+  // สูตร
+  let HI = houseTotal > 0 ? (housePositive * 100 / houseTotal).toFixed(2) : 0;
+  let CI = containerTotal > 0 ? (containerPositive * 100 / containerTotal).toFixed(2) : 0;
+  let BI = houseTotal > 0 ? (containerPositive * 100 / houseTotal).toFixed(2) : 0;
+
+  document.getElementById('result').innerHTML = `
+    <p><b>ค่า HI:</b> ${HI} %</p>
+    <p><b>ค่า CI:</b> ${CI} %</p>
+    <p><b>ค่า BI:</b> ${BI}</p>
+  `;
+}
+</script>
+</body>
+</html>
