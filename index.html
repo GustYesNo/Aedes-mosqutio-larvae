@@ -2,157 +2,245 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>คำนวณค่า HI CI BI</title>
+  <title>แบบฟอร์มคำนวณค่า HI CI BI</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
+      font-family: "Tahoma", sans-serif;
+      background: #f2f6fc;
       padding: 20px;
-      margin: 0;
     }
     .container {
-      max-width: 650px;
+      max-width: 750px;
       margin: auto;
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      overflow: hidden; /* ครอบหัวกล่อง */
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
-    /* ส่วนหัวกล่อง */
     .header {
-      background: #2196F3;
-      text-align: center;
-      padding: 20px;
-      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #0078D7;
+      padding-bottom: 10px;
     }
     .header img {
-      width: 70px;
-      display: block;
-      margin: 0 auto 10px;
+      height: 60px;
+      margin-right: 15px;
     }
     .header h3 {
       margin: 0;
-      font-size: 1.2em;
-    }
-    /* เนื้อหา */
-    .content {
-      padding: 20px;
+      color: #0078D7;
+      font-size: 20px;
     }
     h2 {
       text-align: center;
       color: #333;
-      margin-bottom: 20px;
-    }
-    .input-group {
-      margin-bottom: 15px;
+      margin-bottom: 25px;
     }
     label {
-      font-weight: bold;
       display: block;
-      margin-bottom: 5px;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      color: #444;
     }
-    input, select {
+    input, select, button {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 14px;
     }
     button {
-      width: 100%;
-      padding: 12px;
-      background: #2196F3;
-      border: none;
-      color: white;
-      font-size: 1.1em;
-      border-radius: 8px;
+      background: #0078D7;
+      color: #fff;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
     }
     button:hover {
-      background: #1976D2;
+      background: #005a9e;
     }
     .result {
-      margin-top: 20px;
+      margin-top: 25px;
+      padding: 15px;
       text-align: center;
-      font-size: 1.1em;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 1.8;
     }
+    .green { color: green; font-weight: bold; }
+    .red { color: red; font-weight: bold; }
   </style>
 </head>
 <body>
-
-  <div class="container">
-    <!-- หัวกล่อง -->
-    <div class="header">
-      <img src="logo.png" alt="Logo">
-      <h3>ศูนย์บริการสาธารณสุขที่ 8 บางเขน</h3>
-    </div>
-
-    <!-- เนื้อหา -->
-    <div class="content">
-      <h2>คำนวณค่า HI CI BI</h2>
-
-      <div class="input-group">
-        <label>ชื่อ รพ.สต.</label>
-        <input type="text" id="hospital" placeholder="กรอกชื่อ รพ.สต.">
-      </div>
-
-      <div class="input-group">
-        <label>เลือกหมวดหมู่</label>
-        <select id="category">
-          <option value="หมู่บ้าน">หมู่บ้าน</option>
-          <option value="วัด">วัด</option>
-          <option value="โรงเรียน">โรงเรียน</option>
-          <option value="ศูนย์เด็กเล็ก">ศูนย์เด็กเล็ก</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label>ชื่อหมู่บ้าน/วัด/โรงเรียน/ศูนย์เด็กเล็ก</label>
-        <input type="text" id="place" placeholder="เช่น บ้านหนองบัว">
-      </div>
-
-      <div class="input-group">
-        <label>จำนวนหลังคาเรือนที่สำรวจ</label>
-        <input type="number" id="houseTotal" min="0">
-      </div>
-
-      <div class="input-group">
-        <label>จำนวนหลังคาเรือนที่พบลูกน้ำยุงลาย</label>
-        <input type="number" id="housePositive" min="0">
-      </div>
-
-      <div class="input-group">
-        <label>จำนวนภาชนะที่สำรวจ</label>
-        <input type="number" id="containerTotal" min="0">
-      </div>
-
-      <div class="input-group">
-        <label>จำนวนภาชนะที่มีลูกน้ำยุงลาย</label>
-        <input type="number" id="containerPositive" min="0">
-      </div>
-
-      <button onclick="calculate()">คำนวณ</button>
-
-      <div class="result" id="result"></div>
-    </div>
+<div class="container">
+  <div class="header">
+    <img src="logo.png" alt="Logo">
+    <h3>ศูนย์บริการสาธารณสุขเทศบาลนครนนทุบุรีที่ 8 บางเขน</h3>
   </div>
 
+  <h2>การสำรวจลูกน้ำยุงลาย งานควบคุมโรคติดต่อ</h2>
+
+  <!-- เลือกเดือน -->
+  <label>เลือกเดือน</label>
+  <select id="month">
+    <option value="">-- เลือกเดือน --</option>
+    <option>มกราคม</option><option>กุมภาพันธ์</option><option>มีนาคม</option>
+    <option>เมษายน</option><option>พฤษภาคม</option><option>มิถุนายน</option>
+    <option>กรกฎาคม</option><option>สิงหาคม</option><option>กันยายน</option>
+    <option>ตุลาคม</option><option>พฤศจิกายน</option><option>ธันวาคม</option>
+  </select>
+
+  <!-- เลือกชุมชน -->
+  <label>เลือกชุมชน</label>
+  <select id="community">
+      <option value="">-- เลือกชุมชน --</option>
+      <option>หมู่ 3 จาริพิบูลย์</option>
+      <option>หมู่ 3 วัดฝาง</option>
+      <option>หมู่ 4 บางเขน</option>
+      <option>หมู่ 5 บางเขน</option>
+      <option>หมู่ 6 ศิริโชติ-สวัสดิ์กิจ</option>
+      <option>หมู่ 6 ศิริชัย</option>
+      <option>หมู่ 6 วัดทางหลวง</option>
+      <option>หมู่ 7 ศิริชัยพัฒนา</option>
+      <option>หมู่ 7 วัดโพธิ์ทองล่าง</option>
+  </select>
+
+  <!-- เลือก อสม. -->
+  <label>รายชื่อ อสม.</label>
+  <select id="healthVolunteer">
+    <option value="">-- เลือก อสม. --</option>
+  </select>
+
+  <!-- เลือกสถานที่ -->
+  <label>สถานที่</label>
+  <select id="placeType">
+    <option value="">-- เลือกสถานที่ --</option>
+    <option>บ้าน</option>
+    <option>วัด/ศาสนสถาน</option>
+    <option>โรงเรียน</option>
+    <option>โรงพยาบาล</option>
+    <option>โรงแรม/คอนโด</option>
+    <option>โรงงาน</option>
+  </select>
+
+  <!-- รายละเอียดสถานที่ -->
+  <label>รายละเอียดสถานที่</label>
+  <input type="text" id="placeDetail" placeholder="บ้านเลขที่, ซอย, แยก">
+
+  <!-- ฟิลด์กรอกข้อมูล -->
+  <label>จำนวนหลังคาเรือนที่สำรวจ</label>
+  <input type="number" id="houseTotal">
+
+  <label>จำนวนหลังคาเรือนที่พบลูกน้ำ</label>
+  <input type="number" id="housePositive">
+
+  <label>จำนวนภาชนะที่สำรวจ</label>
+  <input type="number" id="containerTotal">
+
+  <label>จำนวนภาชนะที่พบลูกน้ำ</label>
+  <input type="number" id="containerPositive">
+
+  <button onclick="calculate()">คำนวณ</button>
+
+  <div class="result" id="result"></div>
+</div>
+
 <script>
+  const volunteers = {
+    "หมู่ 3 จาริพิบูลย์": ["อสม. กานดา", "อสม. สมหญิง"],
+    "หมู่ 3 วัดฝาง": ["อสม. อารีย์", "อสม. ประสิทธิ์"],
+    "หมู่ 4 บางเขน": ["อสม. วิชัย", "อสม. มาลี"],
+    "หมู่ 5 บางเขน": ["อสม. ชาญ", "อสม. ดารา"],
+    "หมู่ 6 ศิริโชติ-สวัสดิ์กิจ": ["อสม. ประนอม", "อสม. ลัดดา"],
+    "หมู่ 6 ศิริชัย": ["อสม. สมปอง", "อสม. สุรีย์"],
+    "หมู่ 6 วัดทางหลวง": ["อสม. ก้องภพ", "อสม. สายฝน"],
+    "หมู่ 7 ศิริชัยพัฒนา": ["อสม. วรนุช", "อสม. สุเทพ"],
+    "หมู่ 7 วัดโพธิ์ทองล่าง": ["อสม. มนตรี", "อสม. สุดา"]
+  };
+
+  document.getElementById("community").addEventListener("change", function() {
+    const community = this.value;
+    const volunteerSelect = document.getElementById("healthVolunteer");
+    volunteerSelect.innerHTML = '<option value="">-- เลือก อสม. --</option>';
+    if (volunteers[community]) {
+      volunteers[community].forEach(name => {
+        let option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        volunteerSelect.appendChild(option);
+      });
+    }
+  });
+
+  function formatNumber(num, decimals) {
+  return (num % 1 === 0) ? num.toFixed(0) : num.toFixed(decimals);
+}
+
 function calculate() {
-  let houseTotal = parseFloat(document.getElementById('houseTotal').value) || 0;
-  let housePositive = parseFloat(document.getElementById('housePositive').value) || 0;
-  let containerTotal = parseFloat(document.getElementById('containerTotal').value) || 0;
-  let containerPositive = parseFloat(document.getElementById('containerPositive').value) || 0;
+    const houseTotal = parseInt(document.getElementById("houseTotal").value) || 0;
+    const housePositive = parseInt(document.getElementById("housePositive").value) || 0;
+    const containerTotal = parseInt(document.getElementById("containerTotal").value) || 0;
+    const containerPositive = parseInt(document.getElementById("containerPositive").value) || 0;
 
-  // สูตร
-  let HI = houseTotal > 0 ? (housePositive * 100 / houseTotal).toFixed(2) : 0;
-  let CI = containerTotal > 0 ? (containerPositive * 100 / containerTotal).toFixed(2) : 0;
-  let BI = houseTotal > 0 ? (containerPositive * 100 / houseTotal).toFixed(2) : 0;
+    const HI = houseTotal ? (housePositive * 100 / houseTotal) : 0;
+    const CI = containerTotal ? (containerPositive * 100 / containerTotal) : 0;
+    const BI = houseTotal ? (containerPositive * 100 / houseTotal) : 0;
 
-  document.getElementById('result').innerHTML = `
-    <p><b>ค่า HI:</b> ${HI} %</p>
-    <p><b>ค่า CI:</b> ${CI} %</p>
-    <p><b>ค่า BI:</b> ${BI}</p>
-  `;
+    // เก็บค่าความเสี่ยง
+    let hiRisk = HI < 10 ? "ไม่มีความเสี่ยง" : "มีความเสี่ยง";
+    let ciRisk = CI < 0.002 ? "ไม่มีความเสี่ยง" : "มีความเสี่ยง";
+    let biRisk = BI < 50 ? "ไม่มีความเสี่ยง" : "มีความเสี่ยง";
+
+    // แสดงผลรวมจำนวนจริง + % + ความเสี่ยง
+    let resultHTML = `
+        จำนวนหลังคาเรือนที่พบลูกน้ำยุงลาย (HI): 
+        HI = ${formatNumber(HI,2)}% <span class="${HI<10?'green':'red'}">(${hiRisk})</span><br><br>
+
+        จำนวนภาชนะที่พบลูกน้ำยุงลาย (CI):
+        CI = ${formatNumber(CI,4)}% <span class="${CI<0.002?'green':'red'}">(${ciRisk})</span><br><br>
+
+        ความชุกของลูกน้ำยุงลาย (BI): 
+        BI = ${formatNumber(BI,2)}% <span class="${BI<50?'green':'red'}">(${biRisk})</span>
+    `;
+    document.getElementById("result").innerHTML = resultHTML;
+
+    // รวมความเสี่ยงทั้งหมดเป็นตัวแปรเพื่อส่งไป Google Sheet
+    const riskLevel = `HI: ${hiRisk}, CI: ${ciRisk}, BI: ${biRisk}`;
+
+    // ส่งข้อมูลไป Google Sheet
+    sendToGoogleSheet(HI.toFixed(2), CI.toFixed(4), BI.toFixed(2), riskLevel);
+}
+
+// ฟังก์ชันส่งข้อมูลไป Google Sheet
+function sendToGoogleSheet(HI, CI, BI, riskLevel) {
+    let month = document.getElementById('month').value;
+    let community = document.getElementById('community').value;
+    let volunteer = document.getElementById('healthVolunteer').value;
+    let place = document.getElementById('placeType').value;
+    let placeDetail = document.getElementById('placeDetail').value;
+
+    fetch("https://script.google.com/macros/s/AKfycbzGPm9nJbTBKTgH0cVUO9a8zLCuRMIVNCD3SfkTjFgFWq9p-EqHnqGJyDLD5wy9IcGw9Q/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            month,
+            community,
+            volunteer,
+            place,
+            placeDetail,
+            HI,
+            CI,
+            BI,
+            riskLevel
+        }),
+        mode: "no-cors"
+    })
+    .then(() => console.log("Data sent successfully"))
+    .catch(error => console.error("Error:", error));
 }
 </script>
 </body>
