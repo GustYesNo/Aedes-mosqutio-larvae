@@ -131,17 +131,17 @@
   <input type="text" id="placeDetail" placeholder="บ้านเลขที่, ซอย, แยก">
 
   <!-- ฟิลด์กรอกข้อมูล -->
-  <label>จำนวนหลังคาเรือนที่สำรวจ</label>
-  <input type="number" id="houseTotal">
-
-  <label>จำนวนหลังคาเรือนที่พบลูกน้ำ</label>
-  <input type="number" id="housePositive">
-
-  <label>จำนวนภาชนะที่สำรวจ</label>
+  <label>จำนวนภาชนะที่สำรวจ (CI)</label>
   <input type="number" id="containerTotal">
 
-  <label>จำนวนภาชนะที่พบลูกน้ำ</label>
+  <label>จำนวนภาชนะที่พบลูกน้ำยุงลาย (CI)</label>
   <input type="number" id="containerPositive">
+
+  <label>จำนวนหลังคาเรือนที่สำรวจ (HI)</label>
+  <input type="number" id="houseTotal">
+
+  <label>จำนวนหลังคาเรือนที่พบลูกน้ำ (HI)</label>
+  <input type="number" id="housePositive">
 
   <button onclick="calculate()">คำนวณ</button>
 
@@ -215,18 +215,18 @@ function calculate() {
     // แสดงผลรวมจำนวนจริง + % + ความเสี่ยง
     let resultHTML = `
         จำนวนหลังคาเรือนที่พบลูกน้ำยุงลาย (HI): 
-        HI = ${formatNumber(HI,2)}% <span class="${HI<10?'green':'red'}">(${hiRisk})</span><br><br>
+        ${formatNumber(HI,2)}% <span class="${HI<10?'green':'red'}">(${hiRisk})</span><br><br>
 
         จำนวนภาชนะที่พบลูกน้ำยุงลาย (CI):
-        CI = ${formatNumber(CI,4)}% <span class="${CI<0.002?'green':'red'}">(${ciRisk})</span><br><br>
+        ${formatNumber(CI,4)}% <span class="${CI<0.002?'green':'red'}">(${ciRisk})</span><br><br>
 
         ความชุกของลูกน้ำยุงลาย (BI): 
-        BI = ${formatNumber(BI,2)}% <span class="${BI<50?'green':'red'}">(${biRisk})</span>
+        ${formatNumber(BI,2)}% <span class="${BI<50?'green':'red'}">(${biRisk})</span>
     `;
     document.getElementById("result").innerHTML = resultHTML;
 
     // รวมความเสี่ยงทั้งหมดเป็นตัวแปรเพื่อส่งไป Google Sheet
-    const riskLevel = `HI: ${hiRisk}, CI: ${ciRisk}, BI: ${biRisk}`;
+    const riskLevel = ` ${hiRisk},  ${ciRisk},   ${biRisk}`;
 
     // ส่งข้อมูลไป Google Sheet
     sendToGoogleSheet(HI.toFixed(2), CI.toFixed(4), BI.toFixed(2), riskLevel);
@@ -239,6 +239,10 @@ function sendToGoogleSheet(HI, CI, BI, riskLevel) {
     let volunteer = document.getElementById('healthVolunteer').value;
     let place = document.getElementById('placeType').value;
     let placeDetail = document.getElementById('placeDetail').value;
+    let containerTotal = document.getElementById('containerTotal').value;
+    let containerPositive = document.getElementById('containerPositive').value;
+    let houseTotal = document.getElementById('houseTotal').value;
+    let housePositive = document.getElementById('housePositive').value;
 
     fetch("https://script.google.com/macros/s/AKfycbzGPm9nJbTBKTgH0cVUO9a8zLCuRMIVNCD3SfkTjFgFWq9p-EqHnqGJyDLD5wy9IcGw9Q/exec", {
         method: "POST",
@@ -249,6 +253,10 @@ function sendToGoogleSheet(HI, CI, BI, riskLevel) {
             volunteer,
             place,
             placeDetail,
+            containerTotal,
+            containerPositive,
+            houseTotal,
+            housePositive,
             HI,
             CI,
             BI,
@@ -262,7 +270,6 @@ function sendToGoogleSheet(HI, CI, BI, riskLevel) {
 </script>
 </body>
 </html>
-
 
 
 
