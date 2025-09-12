@@ -127,16 +127,16 @@
   </select>
 
   <!-- ฟิลด์กรอกข้อมูล -->
-  <label>1)จำนวนภาชนะที่สำรวจ (CI)</label>
+  <label>1) จำนวนภาชนะที่สำรวจ (CI)</label>
   <input type="number" id="containerTotal">
 
-  <label>2)จำนวนภาชนะที่พบลูกน้ำยุงลาย (CI)</label>
+  <label>2) จำนวนภาชนะที่พบลูกน้ำยุงลาย (CI)</label>
   <input type="number" id="containerPositive">
 
-  <label>3)จำนวนหลังคาเรือนที่สำรวจ (HI)</label>
+  <label>3) จำนวนหลังคาเรือนที่สำรวจ (HI)</label>
   <input type="number" id="houseTotal">
 
-  <label>4)จำนวนหลังคาเรือนที่พบลูกน้ำยุงลาย (HI)</label>
+  <label>4) จำนวนหลังคาเรือนที่พบลูกน้ำยุงลาย (HI)</label>
   <input type="number" id="housePositive">
 
   <button onclick="calculate()">ส่ง</button>
@@ -235,13 +235,12 @@ function sendToGoogleSheet(HI, CI, BI, riskLevel) {
     let community = document.getElementById('community').value;
     let volunteer = document.getElementById('healthVolunteer').value;
     let place = document.getElementById('placeType').value;
-    let placeDetail = document.getElementById('placeDetail').value;
     let containerTotal = document.getElementById('containerTotal').value;
     let containerPositive = document.getElementById('containerPositive').value;
     let houseTotal = document.getElementById('houseTotal').value;
     let housePositive = document.getElementById('housePositive').value;
 
-    fetch("https://script.google.com/macros/s/AKfycbx3PvqZDMLM--cNu0Z4Mwy_ZZJZrLZogT4wi_L4-lUgFlAx4FQZ81q1CWIn291jg-Ktfg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbyOIXUkBFSCRvPnObNxk6MLeZmf0PW0XgrwXGyRVFUucZXcbgGpbLH9VY4N_HTS5FTwkQ/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -249,7 +248,6 @@ function sendToGoogleSheet(HI, CI, BI, riskLevel) {
             community,
             volunteer,
             place,
-            placeDetail,
             containerTotal,
             containerPositive,
             houseTotal,
@@ -267,6 +265,7 @@ function sendToGoogleSheet(HI, CI, BI, riskLevel) {
 </script>
 </body>
 </html>
+
 
 
 
